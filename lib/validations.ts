@@ -16,5 +16,18 @@ export const createCommentSchema = z.object({
   content: z.string().trim().min(1, "Komentar tidak boleh kosong").max(500),
 });
 
+export const registerSchema = z.object({
+  username: z
+    .string()
+    .trim()
+    .min(3, "Username minimal 3 karakter")
+    .max(20, "Username maksimal 20 karakter")
+    .regex(/^[a-zA-Z0-9_]+$/, "Username hanya boleh huruf, angka, dan underscore"),
+  email: z.string().trim().email("Email tidak valid"),
+  password: z.string().min(6, "Password minimal 6 karakter"),
+  name: z.string().trim().max(50).optional(),
+});
+
 export type CreatePostInput = z.infer<typeof createPostSchema>;
 export type CreateCommentInput = z.infer<typeof createCommentSchema>;
+export type RegisterInput = z.infer<typeof registerSchema>;
